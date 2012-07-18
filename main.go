@@ -40,8 +40,7 @@ func main() {
 
 	// Load the sounds used in the game
 	buffer := sf.NewSoundBufferFromFile("resources/ball.wav")
-	ballSound := sf.NewSound()
-	ballSound.SetBuffer(buffer)
+	ballSound := sf.NewSound(buffer)
 
 	// Create the left paddle
 	leftPaddle := sf.NewRectangleShape()
