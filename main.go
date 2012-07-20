@@ -86,7 +86,7 @@ func main() {
 		select {
 		case <-ticker.C:
 			//poll events
-			for event := renderWindow.PollEvent(); event != nil; event = renderWindow.PollEvent() {
+			for event, eventType := renderWindow.PollEvent(); event != nil; event, eventType = renderWindow.PollEvent() {
 				switch event.(type) {
 				case *sf.KeyEvent:
 					switch event.(*sf.KeyEvent).Code {
@@ -113,7 +113,7 @@ func main() {
 						}
 					}
 				}
-				if event.GetType() == sf.Event_Closed {
+				if eventType == sf.Event_Closed {
 					renderWindow.Close()
 				}
 			}
