@@ -11,6 +11,7 @@ package main
 
 import (
 	sf "bitbucket.org/krepa098/gosfml2"
+	"fmt"
 	"math"
 	"math/rand"
 	"runtime"
@@ -86,7 +87,7 @@ func main() {
 		select {
 		case <-ticker.C:
 			//poll events
-			for event, eventType := renderWindow.PollEvent(); event != nil; event, eventType = renderWindow.PollEvent() {
+			for event, eventType := renderWindow.PollEvent(); eventType != sf.Event_None; event, eventType = renderWindow.PollEvent() {
 				switch event.(type) {
 				case *sf.KeyEvent:
 					switch event.(*sf.KeyEvent).Code {
