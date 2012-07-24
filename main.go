@@ -11,7 +11,6 @@ package main
 
 import (
 	sf "bitbucket.org/krepa098/gosfml2"
-	"fmt"
 	"math"
 	"math/rand"
 	"runtime"
@@ -87,10 +86,10 @@ func main() {
 		select {
 		case <-ticker.C:
 			//poll events
-			for event, eventType := renderWindow.PollEvent(); eventType != sf.Event_None; event, eventType = renderWindow.PollEvent() {
-				switch event.(type) {
-				case *sf.KeyEvent:
-					switch event.(*sf.KeyEvent).Code {
+			for event := renderWindow.PollEvent(); event != nil; event = renderWindow.PollEvent() {
+				switch ev := event.(type) {
+				case *sf.EventKeyReleased:
+					switch ev.Code {
 					case sf.Key_Escape:
 						renderWindow.Close()
 					case sf.Key_Space:
@@ -113,8 +112,7 @@ func main() {
 							}
 						}
 					}
-				}
-				if eventType == sf.Event_Closed {
+				case *sf.EventClosed:
 					renderWindow.Close()
 				}
 			}
