@@ -122,11 +122,11 @@ func main() {
 				deltaTime := time.Second / 60
 
 				// Move the player's paddle
-				if sf.Keyboard_IsKeyPressed(sf.Key_Up) && leftPaddle.GetPosition().Y-paddleSize.Y/2 > 5 {
+				if sf.KeyboardIsKeyPressed(sf.Key_Up) && leftPaddle.GetPosition().Y-paddleSize.Y/2 > 5 {
 					leftPaddle.Move(sf.Vector2f{0, -paddleSpeed * float32(deltaTime.Seconds())})
 				}
 
-				if sf.Keyboard_IsKeyPressed(sf.Key_Down) && leftPaddle.GetPosition().Y+paddleSize.Y/2 < float32(gameHeight)-5 {
+				if sf.KeyboardIsKeyPressed(sf.Key_Down) && leftPaddle.GetPosition().Y+paddleSize.Y/2 < float32(gameHeight)-5 {
 					leftPaddle.Move(sf.Vector2f{0, paddleSpeed * float32(deltaTime.Seconds())})
 				}
 
