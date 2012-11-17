@@ -1,11 +1,10 @@
 /*
-*********************************
-*								*
-*		GOSFML2					*
-*		SFML Examples:	 Pong	*
-*		Ported from C++ to Go	*
-*********************************
- */
+*********************************************
+*	GOSFML2
+*	SFML Examples:	 Pong
+*	Ported from C++ to Go
+*********************************************
+*/
 
 package main
 
@@ -46,7 +45,7 @@ func main() {
 	leftPaddle := sf.NewRectangleShape()
 	leftPaddle.SetSize(sf.Vector2f{paddleSize.X - 3, paddleSize.Y - 3})
 	leftPaddle.SetOutlineThickness(3)
-	leftPaddle.SetOutlineColor(sf.Color_Black)
+	leftPaddle.SetOutlineColor(sf.ColorBlack())
 	leftPaddle.SetFillColor(sf.Color{100, 100, 200, 255})
 	leftPaddle.SetOrigin(sf.Vector2f{paddleSize.X / 2, paddleSize.Y / 2})
 
@@ -54,27 +53,26 @@ func main() {
 	rightPaddle := sf.NewRectangleShape()
 	rightPaddle.SetSize(sf.Vector2f{paddleSize.X - 3, paddleSize.Y - 3})
 	rightPaddle.SetOutlineThickness(3)
-	rightPaddle.SetOutlineColor(sf.Color_Black)
+	rightPaddle.SetOutlineColor(sf.ColorBlack())
 	rightPaddle.SetFillColor(sf.Color{200, 100, 100, 255})
 	rightPaddle.SetOrigin(sf.Vector2f{paddleSize.X / 2, paddleSize.Y / 2})
 
 	// Create the ball
 	ball := sf.NewCircleShape(ballRadius - 3)
 	ball.SetOutlineThickness(3)
-	ball.SetOutlineColor(sf.Color_Black)
-	ball.SetFillColor(sf.Color_White)
+	ball.SetOutlineColor(sf.ColorBlack())
+	ball.SetFillColor(sf.ColorWhite())
 	ball.SetOrigin(sf.Vector2f{ballRadius / 2, ballRadius / 2})
 
 	// Load the text font
-	font := sf.NewFontFromFile("resources/sansation.ttf")
+	font, _ := sf.NewFontFromFile("resources/sansation.ttf")
 
 	// Initialize the pause message
-	pauseMessage := sf.NewText()
+	pauseMessage := sf.NewText(font)
 	pauseMessage.SetCharacterSize(40)
 	pauseMessage.SetPosition(sf.Vector2f{170, 150})
-	pauseMessage.SetColor(sf.Color_White)
+	pauseMessage.SetColor(sf.ColorWhite())
 	pauseMessage.SetString("Welcome to SFML pong!\nPress space to start the game")
-	pauseMessage.SetFont(font)
 
 	var (
 		rightPaddleSpeed float32 = 0
@@ -88,7 +86,7 @@ func main() {
 			//poll events
 			for event := renderWindow.PollEvent(); event != nil; event = renderWindow.PollEvent() {
 				switch ev := event.(type) {
-				case *sf.EventKeyReleased:
+				case sf.EventKeyReleased:
 					switch ev.Code {
 					case sf.Key_Escape:
 						renderWindow.Close()
@@ -112,7 +110,7 @@ func main() {
 							}
 						}
 					}
-				case *sf.EventClosed:
+				case sf.EventClosed:
 					renderWindow.Close()
 				}
 			}
