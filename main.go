@@ -4,7 +4,7 @@
 *	SFML Examples:	 Pong
 *	Ported from C++ to Go
 *********************************************
-*/
+ */
 
 package main
 
@@ -12,12 +12,10 @@ import (
 	sf "bitbucket.org/krepa098/gosfml2"
 	"math"
 	"math/rand"
-	"runtime"
 	"time"
 )
 
 func main() {
-	runtime.LockOSThread()
 
 	const (
 		paddleSpeed = float32(400)
