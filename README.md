@@ -15,6 +15,6 @@ I haven't put a license on this code yet, as the original code didn't come with 
 ## Building the game ##
 You will need:
 - Your OS's build tools
-- [SFML]( http://github.com/LaurentGomila/SFML ) and [CSFML]( http://github.com/LaurentGomila/SFML ) (both need to be installed, SFML before CSFML)
+- [SFML]( http://github.com/LaurentGomila/SFML ) and [CSFML]( http://github.com/LaurentGomila/CSFML ) (both need to be installed, SFML before CSFML)
 - `$ go install bitbucket.org/krepa098/gosfml2`
 - `$ go run main.go`
