@@ -2,8 +2,8 @@ package main
 
 import (
 	sf "bitbucket.org/krepa098/gosfml2"
-	"github.com/bwilkins/pong/ball"
-	"github.com/bwilkins/pong/paddle"
+	"github.com/bwilkins/gopong/ball"
+	"github.com/bwilkins/gopong/paddle"
 	"math"
 	"math/rand"
 	"time"
