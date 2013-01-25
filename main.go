@@ -2,76 +2,12 @@ package main
 
 import (
 	sf "bitbucket.org/krepa098/gosfml2"
+	"github.com/bwilkins/pong/ball"
+	"github.com/bwilkins/pong/paddle"
 	"math"
 	"math/rand"
 	"time"
 )
-
-type Paddle struct {
-	speed     float32
-	max_speed float32
-	size      sf.Vector2f
-	shape     *sf.RectangleShape
-}
-
-type Ball struct {
-	speed     float32
-	max_speed float32
-	angle     float32
-	radius    float32
-	shape     *sf.CircleShape
-	sound     *sf.Sound
-}
-
-func NewPaddle(speed, max_speed float32, size sf.Vector2f, color sf.Color) *Paddle {
-	shape := sf.NewRectangleShape()
-	//Take 3 off each edge to account for outline thickness
-	shape.SetSize(sf.Vector2f{size.X - 3, size.Y - 3})
-	shape.SetOutlineThickness(3)
-	shape.SetOutlineColor(sf.ColorBlack())
-	shape.SetFillColor(color)
-	shape.SetOrigin(sf.Vector2f{size.X / 2, size.Y / 2})
-
-	return &Paddle{speed, max_speed, size, shape}
-}
-
-func (p *Paddle) TopLeft() sf.Vector2f {
-	return sf.Vector2f{p.shape.GetPosition().X - p.size.X/2, p.shape.GetPosition().Y - p.size.Y/2}
-}
-
-func (p *Paddle) BottomRight() sf.Vector2f {
-	return sf.Vector2f{p.shape.GetPosition().X + p.size.X/2, p.shape.GetPosition().Y + p.size.Y/2}
-}
-
-func (p *Paddle) Center() sf.Vector2f {
-	return p.shape.GetPosition()
-}
-
-func NewBall(speed, max_speed, radius float32, sound_file string) *Ball {
-	//Once again, accounting for outline thickness
-	shape := sf.NewCircleShape(radius - 3)
-	shape.SetOutlineThickness(3)
-	shape.SetOutlineColor(sf.ColorBlack())
-	shape.SetFillColor(sf.ColorWhite())
-	shape.SetOrigin(sf.Vector2f{radius / 2, radius / 2})
-
-	buffer := sf.NewSoundBufferFromFile(sound_file)
-	sound := sf.NewSound(buffer)
-
-	return &Ball{speed, max_speed, float32(0), radius, shape, sound}
-}
-
-func (b *Ball) TopLeft() sf.Vector2f {
-	return sf.Vector2f{b.shape.GetPosition().X - b.radius, b.shape.GetPosition().Y - b.radius}
-}
-
-func (b *Ball) BottomRight() sf.Vector2f {
-	return sf.Vector2f{b.shape.GetPosition().X + b.radius, b.shape.GetPosition().Y + b.radius}
-}
-
-func (b *Ball) Center() sf.Vector2f {
-	return b.shape.GetPosition()
-}
 
 func main() {
 	//Define some variables for the game
@@ -96,13 +32,13 @@ func main() {
 	renderWindow := sf.NewRenderWindow(sf.VideoMode{gameWidth, gameHeight, bitDepth}, "Pong (Brett's Go test)", sf.Style_DefaultStyle, nil)
 
 	//Create the left paddle
-	leftPaddle := NewPaddle(paddleMaxSpeed, paddleMaxSpeed, paddleDefaultSize, sf.Color{100, 100, 200, 255})
+	leftPaddle := paddle.NewPaddle(paddleMaxSpeed, paddleMaxSpeed, paddleDefaultSize, sf.Color{100, 100, 200, 255})
 
 	//Create the right paddle
-	rightPaddle := NewPaddle(0, paddleMaxSpeed, paddleDefaultSize, sf.Color{200, 100, 100, 255})
+	rightPaddle := paddle.NewPaddle(0, paddleMaxSpeed, paddleDefaultSize, sf.Color{200, 100, 100, 255})
 
 	//Create the ball
-	ball := NewBall(ballMaxSpeed, ballMaxSpeed, ballRadius, "resources/ball.wa")
+	ball := ball.NewBall(ballMaxSpeed, ballMaxSpeed, ballRadius, "resources/ball.wa")
 
 	//Load font
 	font, _ := sf.NewFontFromFile("resources/sansation.ttf")
