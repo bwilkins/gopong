@@ -38,7 +38,7 @@ func main() {
 	rightPaddle := paddle.NewPaddle(0, paddleMaxSpeed, paddleDefaultSize, sf.Color{200, 100, 100, 255})
 
 	//Create the ball
-	ball := ball.NewBall(ballMaxSpeed, ballMaxSpeed, ballRadius, "resources/ball.wa")
+	ball := ball.NewBall(ballMaxSpeed, ballMaxSpeed, ballRadius, "resources/ball.wav")
 
 	//Load font
 	font, _ := sf.NewFontFromFile("resources/sansation.ttf")
@@ -64,15 +64,15 @@ func main() {
 						if !isPlaying {
 							//restart the game
 							isPlaying = true
-							leftPaddle.shape.SetPosition(sf.Vector2f{10 + leftPaddle.size.X/2, float32(gameHeight) / 2})
-							rightPaddle.shape.SetPosition(sf.Vector2f{float32(gameWidth) - 10 - rightPaddle.size.X/2, float32(gameHeight) / 2})
-							ball.shape.SetPosition(sf.Vector2f{float32(gameWidth) / 2, float32(gameHeight) / 2})
+							leftPaddle.Shape.SetPosition(sf.Vector2f{10 + leftPaddle.Size.X/2, float32(gameHeight) / 2})
+							rightPaddle.Shape.SetPosition(sf.Vector2f{float32(gameWidth) - 10 - rightPaddle.Size.X/2, float32(gameHeight) / 2})
+							ball.Shape.SetPosition(sf.Vector2f{float32(gameWidth) / 2, float32(gameHeight) / 2})
 
 							//ensure the ball angle isn't too vertical
 							for {
-								ball.angle = rand.Float32() * math.Pi * 2
+								ball.Angle = rand.Float32() * math.Pi * 2
 
-								if math.Abs(math.Cos(float64(ball.angle))) > 0.7 {
+								if math.Abs(math.Cos(float64(ball.Angle))) > 0.7 {
 									break
 								}
 							}
@@ -88,20 +88,20 @@ func main() {
 
 				//Move the player's paddle
 				if sf.KeyboardIsKeyPressed(sf.Key_Up) && leftPaddle.TopLeft().Y > 5 {
-					leftPaddle.shape.Move(sf.Vector2f{0, -leftPaddle.speed * float32(deltaTime.Seconds())})
+					leftPaddle.Shape.Move(sf.Vector2f{0, -leftPaddle.Speed * float32(deltaTime.Seconds())})
 				}
 				if sf.KeyboardIsKeyPressed(sf.Key_Down) && leftPaddle.BottomRight().Y < float32(gameHeight)-5 {
-					leftPaddle.shape.Move(sf.Vector2f{0, leftPaddle.speed * float32(deltaTime.Seconds())})
+					leftPaddle.Shape.Move(sf.Vector2f{0, leftPaddle.Speed * float32(deltaTime.Seconds())})
 				}
 
 				//Move the ai's paddle
-				if (rightPaddle.speed < 0 && rightPaddle.TopLeft().Y > 5) || (rightPaddle.speed > 0 && rightPaddle.BottomRight().Y < float32(gameHeight)-5) {
-					rightPaddle.shape.Move(sf.Vector2f{0, rightPaddle.speed * float32(deltaTime.Seconds())})
+				if (rightPaddle.Speed < 0 && rightPaddle.TopLeft().Y > 5) || (rightPaddle.Speed > 0 && rightPaddle.BottomRight().Y < float32(gameHeight)-5) {
+					rightPaddle.Shape.Move(sf.Vector2f{0, rightPaddle.Speed * float32(deltaTime.Seconds())})
 				}
 
 				//Move ze ball
-				factor := ball.speed * float32(deltaTime.Seconds())
-				ball.shape.Move(sf.Vector2f{float32(math.Cos(float64(ball.angle))) * factor, float32(math.Sin(float64(ball.angle))) * factor})
+				factor := ball.Speed * float32(deltaTime.Seconds())
+				ball.Shape.Move(sf.Vector2f{float32(math.Cos(float64(ball.Angle))) * factor, float32(math.Sin(float64(ball.Angle))) * factor})
 
 				//Check collisions between ball and screen edge
 				if ball.TopLeft().X < 0 {
@@ -115,15 +115,15 @@ func main() {
 				}
 
 				if ball.TopLeft().Y < 0 {
-					ball.angle = -ball.angle
-					ball.shape.SetPosition(sf.Vector2f{ball.Center().X, ball.radius + 0.1})
-					ball.sound.Play()
+					ball.Angle = -ball.Angle
+					ball.Shape.SetPosition(sf.Vector2f{ball.Center().X, ball.Radius + 0.1})
+					ball.Sound.Play()
 				}
 
 				if ball.BottomRight().Y > float32(gameHeight) {
-					ball.angle = -ball.angle
-					ball.shape.SetPosition(sf.Vector2f{ball.Center().X, float32(gameHeight) - ball.radius - 0.1})
-					ball.sound.Play()
+					ball.Angle = -ball.Angle
+					ball.Shape.SetPosition(sf.Vector2f{ball.Center().X, float32(gameHeight) - ball.Radius - 0.1})
+					ball.Sound.Play()
 				}
 
 				//Check collisions between the ball and the left paddle
@@ -133,13 +133,13 @@ func main() {
 					ball.TopLeft().Y <= leftPaddle.BottomRight().Y {
 
 					if ball.Center().Y > leftPaddle.Center().Y {
-						ball.angle = math.Pi - ball.angle + rand.Float32()*math.Pi*0.2
+						ball.Angle = math.Pi - ball.Angle + rand.Float32()*math.Pi*0.2
 					} else {
-						ball.angle = math.Pi - ball.angle - rand.Float32()*math.Pi*0.2
+						ball.Angle = math.Pi - ball.Angle - rand.Float32()*math.Pi*0.2
 					}
 
-					ball.shape.SetPosition(sf.Vector2f{leftPaddle.Center().X + ball.radius + leftPaddle.size.X/2 + 0.1, ball.Center().Y})
-					ball.sound.Play()
+					ball.Shape.SetPosition(sf.Vector2f{leftPaddle.Center().X + ball.Radius + leftPaddle.Size.X/2 + 0.1, ball.Center().Y})
+					ball.Sound.Play()
 				}
 
 				//Check collisions between the ball and the right paddle
@@ -149,13 +149,13 @@ func main() {
 					ball.TopLeft().Y <= rightPaddle.BottomRight().Y {
 
 					if ball.Center().Y > rightPaddle.Center().Y {
-						ball.angle = math.Pi - ball.angle + rand.Float32()*math.Pi*0.2
+						ball.Angle = math.Pi - ball.Angle + rand.Float32()*math.Pi*0.2
 					} else {
-						ball.angle = math.Pi - ball.angle - rand.Float32()*math.Pi*0.2
+						ball.Angle = math.Pi - ball.Angle - rand.Float32()*math.Pi*0.2
 					}
 
-					ball.shape.SetPosition(sf.Vector2f{rightPaddle.Center().X - ball.radius - rightPaddle.size.X/2 - 0.1, ball.Center().Y})
-					ball.sound.Play()
+					ball.Shape.SetPosition(sf.Vector2f{rightPaddle.Center().X - ball.Radius - rightPaddle.Size.X/2 - 0.1, ball.Center().Y})
+					ball.Sound.Play()
 				}
 			}
 
@@ -164,9 +164,9 @@ func main() {
 
 			//Draw some shit
 			if isPlaying {
-				renderWindow.Draw(leftPaddle.shape, nil)
-				renderWindow.Draw(rightPaddle.shape, nil)
-				renderWindow.Draw(ball.shape, nil)
+				renderWindow.Draw(leftPaddle.Shape, nil)
+				renderWindow.Draw(rightPaddle.Shape, nil)
+				renderWindow.Draw(ball.Shape, nil)
 			} else {
 				renderWindow.Draw(pauseMessage, nil)
 			}
@@ -176,11 +176,11 @@ func main() {
 
 		case <-aiTicker.C:
 			if ball.BottomRight().Y > rightPaddle.BottomRight().Y {
-				rightPaddle.speed = rightPaddle.max_speed
+				rightPaddle.Speed = rightPaddle.MaxSpeed
 			} else if ball.TopLeft().Y < rightPaddle.TopLeft().Y {
-				rightPaddle.speed = -rightPaddle.max_speed
+				rightPaddle.Speed = -rightPaddle.MaxSpeed
 			} else {
-				rightPaddle.speed = 0
+				rightPaddle.Speed = 0
 			}
 		}
 	}

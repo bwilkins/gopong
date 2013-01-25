@@ -3,12 +3,12 @@ package ball
 import sf "bitbucket.org/krepa098/gosfml2"
 
 type Ball struct {
-	speed     float32
-	max_speed float32
-	angle     float32
-	radius    float32
-	shape     *sf.CircleShape
-	sound     *sf.Sound
+	Speed    float32
+	MaxSpeed float32
+	Angle    float32
+	Radius   float32
+	Shape    *sf.CircleShape
+	Sound    *sf.Sound
 }
 
 func NewBall(speed, max_speed, radius float32, sound_file string) *Ball {
@@ -26,13 +26,13 @@ func NewBall(speed, max_speed, radius float32, sound_file string) *Ball {
 }
 
 func (b *Ball) TopLeft() sf.Vector2f {
-	return sf.Vector2f{b.shape.GetPosition().X - b.radius, b.shape.GetPosition().Y - b.radius}
+	return sf.Vector2f{b.Shape.GetPosition().X - b.Radius, b.Shape.GetPosition().Y - b.Radius}
 }
 
 func (b *Ball) BottomRight() sf.Vector2f {
-	return sf.Vector2f{b.shape.GetPosition().X + b.radius, b.shape.GetPosition().Y + b.radius}
+	return sf.Vector2f{b.Shape.GetPosition().X + b.Radius, b.Shape.GetPosition().Y + b.Radius}
 }
 
 func (b *Ball) Center() sf.Vector2f {
-	return b.shape.GetPosition()
+	return b.Shape.GetPosition()
 }

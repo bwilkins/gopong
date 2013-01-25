@@ -3,10 +3,10 @@ package paddle
 import sf "bitbucket.org/krepa098/gosfml2"
 
 type Paddle struct {
-	speed     float32
-	max_speed float32
-	size      sf.Vector2f
-	shape     *sf.RectangleShape
+	Speed    float32
+	MaxSpeed float32
+	Size     sf.Vector2f
+	Shape    *sf.RectangleShape
 }
 
 func NewPaddle(speed, max_speed float32, size sf.Vector2f, color sf.Color) *Paddle {
@@ -22,13 +22,13 @@ func NewPaddle(speed, max_speed float32, size sf.Vector2f, color sf.Color) *Padd
 }
 
 func (p *Paddle) TopLeft() sf.Vector2f {
-	return sf.Vector2f{p.shape.GetPosition().X - p.size.X/2, p.shape.GetPosition().Y - p.size.Y/2}
+	return sf.Vector2f{p.Shape.GetPosition().X - p.Size.X/2, p.Shape.GetPosition().Y - p.Size.Y/2}
 }
 
 func (p *Paddle) BottomRight() sf.Vector2f {
-	return sf.Vector2f{p.shape.GetPosition().X + p.size.X/2, p.shape.GetPosition().Y + p.size.Y/2}
+	return sf.Vector2f{p.Shape.GetPosition().X + p.Size.X/2, p.Shape.GetPosition().Y + p.Size.Y/2}
 }
 
 func (p *Paddle) Center() sf.Vector2f {
-	return p.shape.GetPosition()
+	return p.Shape.GetPosition()
 }
