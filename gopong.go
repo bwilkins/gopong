@@ -9,6 +9,12 @@ import (
 	"time"
 )
 
+type Collider interface {
+	TopLeft() sf.Vector2f
+	BottomRight() sf.Vector2f
+	Center() sf.Vector2f
+}
+
 func main() {
 	//Define some variables for the game
 	//This block mostly will not change
@@ -127,10 +133,7 @@ func main() {
 				}
 
 				//Check collisions between the ball and the left paddle
-				if ball.TopLeft().X < leftPaddle.BottomRight().X &&
-					ball.TopLeft().X > leftPaddle.Center().X &&
-					ball.BottomRight().Y >= leftPaddle.TopLeft().Y &&
-					ball.TopLeft().Y <= leftPaddle.BottomRight().Y {
+				if leftPaddle.CollideRight(ball) {
 
 					if ball.Center().Y > leftPaddle.Center().Y {
 						ball.Angle = math.Pi - ball.Angle + rand.Float32()*math.Pi*0.2
@@ -143,10 +146,7 @@ func main() {
 				}
 
 				//Check collisions between the ball and the right paddle
-				if ball.BottomRight().X > rightPaddle.TopLeft().X &&
-					ball.BottomRight().X < rightPaddle.Center().X &&
-					ball.BottomRight().Y >= rightPaddle.TopLeft().Y &&
-					ball.TopLeft().Y <= rightPaddle.BottomRight().Y {
+				if rightPaddle.CollideLeft(ball) {
 
 					if ball.Center().Y > rightPaddle.Center().Y {
 						ball.Angle = math.Pi - ball.Angle + rand.Float32()*math.Pi*0.2

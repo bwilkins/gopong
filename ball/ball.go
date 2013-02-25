@@ -25,14 +25,14 @@ func NewBall(speed, max_speed, radius float32, sound_file string) *Ball {
 	return &Ball{speed, max_speed, float32(0), radius, shape, sound}
 }
 
+func (b *Ball) Center() sf.Vector2f {
+	return b.Shape.GetPosition()
+}
+
 func (b *Ball) TopLeft() sf.Vector2f {
-	return sf.Vector2f{b.Shape.GetPosition().X - b.Radius, b.Shape.GetPosition().Y - b.Radius}
+	return sf.Vector2f{b.Center().X - b.Radius, b.Center().Y - b.Radius}
 }
 
 func (b *Ball) BottomRight() sf.Vector2f {
-	return sf.Vector2f{b.Shape.GetPosition().X + b.Radius, b.Shape.GetPosition().Y + b.Radius}
-}
-
-func (b *Ball) Center() sf.Vector2f {
-	return b.Shape.GetPosition()
+	return sf.Vector2f{b.Center().X + b.Radius, b.Center().Y + b.Radius}
 }

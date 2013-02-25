@@ -1,6 +1,7 @@
 package paddle
 
 import sf "bitbucket.org/krepa098/gosfml2"
+import "github.com/bwilkins/gopong/collider"
 
 type Paddle struct {
 	Speed    float32
@@ -21,14 +22,40 @@ func NewPaddle(speed, max_speed float32, size sf.Vector2f, color sf.Color) *Padd
 	return &Paddle{speed, max_speed, size, shape}
 }
 
+func (p *Paddle) Center() sf.Vector2f {
+	return p.Shape.GetPosition()
+}
+
 func (p *Paddle) TopLeft() sf.Vector2f {
-	return sf.Vector2f{p.Shape.GetPosition().X - p.Size.X/2, p.Shape.GetPosition().Y - p.Size.Y/2}
+	return sf.Vector2f{p.Center().X - p.Size.X/2, p.Center().Y - p.Size.Y/2}
 }
 
 func (p *Paddle) BottomRight() sf.Vector2f {
-	return sf.Vector2f{p.Shape.GetPosition().X + p.Size.X/2, p.Shape.GetPosition().Y + p.Size.Y/2}
+	return sf.Vector2f{p.Center().X + p.Size.X/2, p.Center().Y + p.Size.Y/2}
 }
 
-func (p *Paddle) Center() sf.Vector2f {
-	return p.Shape.GetPosition()
+func (p *Paddle) CollideLeft(c collider.Collider) bool {
+	c_br := c.BottomRight()
+	c_tl := c.TopLeft()
+	p_br := p.BottomRight()
+	p_tl := p.TopLeft()
+	if c_br.X > p_tl.X {
+		if c_br.Y < p_br.Y && c_tl.Y > p_tl.Y {
+			return true
+		}
+	}
+	return false
+}
+
+func (p *Paddle) CollideRight(c collider.Collider) bool {
+	c_br := c.BottomRight()
+	c_tl := c.TopLeft()
+	p_br := p.BottomRight()
+	p_tl := p.TopLeft()
+	if c_tl.X < p_br.X {
+		if c_br.Y < p_br.Y && c_tl.Y > p_tl.Y {
+			return true
+		}
+	}
+	return false
 }
