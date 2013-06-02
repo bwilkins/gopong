@@ -35,7 +35,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 
 	//Instantiate the render window for SFML
-	renderWindow := sf.NewRenderWindow(sf.VideoMode{gameWidth, gameHeight, bitDepth}, "Pong (Brett's Go test)", sf.Style_DefaultStyle, nil)
+	renderWindow := sf.NewRenderWindow(sf.VideoMode{gameWidth, gameHeight, bitDepth}, "Pong (Brett's Go test)", sf.StyleDefault, nil)
 
 	//Create the left paddle
 	leftPaddle := paddle.NewPaddle(paddleMaxSpeed, paddleMaxSpeed, paddleDefaultSize, sf.Color{100, 100, 200, 255})
@@ -64,9 +64,9 @@ func main() {
 				switch ev := event.(type) {
 				case sf.EventKeyReleased:
 					switch ev.Code {
-					case sf.Key_Escape:
+					case sf.KeyEscape:
 						renderWindow.Close()
-					case sf.Key_Space:
+					case sf.KeySpace:
 						if !isPlaying {
 							//restart the game
 							isPlaying = true
@@ -93,10 +93,10 @@ func main() {
 				deltaTime := time.Second / 60
 
 				//Move the player's paddle
-				if sf.KeyboardIsKeyPressed(sf.Key_Up) && leftPaddle.TopLeft().Y > 5 {
+				if sf.KeyboardIsKeyPressed(sf.KeyUp) && leftPaddle.TopLeft().Y > 5 {
 					leftPaddle.Shape.Move(sf.Vector2f{0, -leftPaddle.Speed * float32(deltaTime.Seconds())})
 				}
-				if sf.KeyboardIsKeyPressed(sf.Key_Down) && leftPaddle.BottomRight().Y < float32(gameHeight)-5 {
+				if sf.KeyboardIsKeyPressed(sf.KeyDown) && leftPaddle.BottomRight().Y < float32(gameHeight)-5 {
 					leftPaddle.Shape.Move(sf.Vector2f{0, leftPaddle.Speed * float32(deltaTime.Seconds())})
 				}
 

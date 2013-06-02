@@ -19,7 +19,7 @@ func NewBall(speed, max_speed, radius float32, sound_file string) *Ball {
 	shape.SetFillColor(sf.ColorWhite())
 	shape.SetOrigin(sf.Vector2f{radius / 2, radius / 2})
 
-	buffer := sf.NewSoundBufferFromFile(sound_file)
+	buffer, _ := sf.NewSoundBufferFromFile(sound_file)
 	sound := sf.NewSound(buffer)
 
 	return &Ball{speed, max_speed, float32(0), radius, shape, sound}
